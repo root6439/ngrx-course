@@ -11,7 +11,6 @@ import {
   NavigationStart,
   Router,
   RouterLink,
-  RouterModule,
   RouterOutlet,
 } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
