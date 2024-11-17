@@ -16,7 +16,9 @@ export class CoursesHttpService {
   }
 
   findCourseByUrl(courseUrl: string): Observable<Course> {
-    return this.http.get<Course>(`/api/courses/${courseUrl}`);
+    return this.http.get<Course>(
+      `http://localhost:9000/api/courses/${courseUrl}`
+    );
   }
 
   findLessons(
@@ -24,7 +26,7 @@ export class CoursesHttpService {
     pageNumber = 0,
     pageSize = 3
   ): Observable<Lesson[]> {
-    return this.http.get<Lesson[]>('/api/lessons', {
+    return this.http.get<Lesson[]>('http://localhost:9000/api/lessons', {
       params: new HttpParams()
         .set('courseId', courseId.toString())
         .set('sortOrder', 'asc')
@@ -34,6 +36,9 @@ export class CoursesHttpService {
   }
 
   saveCourse(courseId: number | string, changes: Partial<Course>) {
-    return this.http.put('/api/course/' + courseId, changes);
+    return this.http.put(
+      'http://localhost:9000/api/course/' + courseId,
+      changes
+    );
   }
 }

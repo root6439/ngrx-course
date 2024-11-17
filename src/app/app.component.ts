@@ -32,7 +32,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  private readonly router = inject(Router);
+  readonly router = inject(Router);
 
   loading = true;
 
