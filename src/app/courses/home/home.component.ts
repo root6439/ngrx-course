@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { compareCourses, Course } from '../model/course';
+import { compareCourses, Course } from '../../shared/models/course';
 import { Observable } from 'rxjs';
 import { defaultDialogConfig } from '../../shared/default-dialog-config';
 import { EditCourseDialogComponent } from '../edit-course-dialog/edit-course-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { map, shareReplay, tap } from 'rxjs/operators';
-import { CoursesHttpService } from '../services/courses-http.service';
 import { AngularMaterialModule } from '../../shared/Material.module';
 import { CommonModule } from '@angular/common';
 import { CoursesCardListComponent } from '../courses-card-list/courses-card-list.component';
+import { CoursesHttpService } from '../../services/courses-http.service';
 
 @Component({
   selector: 'home',

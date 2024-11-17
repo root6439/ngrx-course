@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Course } from '../model/course';
+import { Course } from '../../shared/models/course';
 import {
   FormBuilder,
   FormGroup,
@@ -8,9 +8,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { CoursesHttpService } from '../services/courses-http.service';
 import { AngularMaterialModule } from '../../shared/Material.module';
 import { CommonModule } from '@angular/common';
+import { CoursesHttpService } from '../../services/courses-http.service';
 
 @Component({
   selector: 'course-dialog',
