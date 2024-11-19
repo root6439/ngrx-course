@@ -15,6 +15,7 @@ import {
 } from '@angular/common/http';
 import { loginReducer } from './stores/login/login-reducer';
 import { provideEffects } from '@ngrx/effects';
+import * as loginEffects from './stores/login/login-effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,6 +25,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     provideStore({ auth: loginReducer }),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideEffects(),
+    provideEffects(loginEffects),
   ],
 };

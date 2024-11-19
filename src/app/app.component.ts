@@ -20,6 +20,7 @@ import { CommonModule } from '@angular/common';
 import { isLoggedIn, isLoggedOut } from './stores/login/login-selectors';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { LoginActions } from './stores/login/action-types';
+import { login } from './stores/login/login.actions';
 
 @Component({
   selector: 'app-root',
@@ -47,6 +48,12 @@ export class AppComponent {
   loading = signal(false);
 
   ngOnInit() {
+    const userProfile = localStorage.getItem('user');
+
+    if (userProfile) {
+      this.store.dispatch(login({ user: JSON.parse(userProfile) }));
+    }
+
     this.watchRouterChanges();
   }
 

@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { coursesGuard } from '../guards/courses.guard';
+import { LoginComponent } from '../login/login.component';
 
 export const routes: Routes = [
   {
@@ -7,11 +8,9 @@ export const routes: Routes = [
     loadChildren: () => import('./courses.routes').then((r) => r.coursesRoutes),
     canActivate: [coursesGuard],
   },
-
   {
     path: 'login',
-    loadComponent: () =>
-      import('../login/login.component').then((c) => c.LoginComponent),
+    component: LoginComponent,
   },
   {
     path: '',
