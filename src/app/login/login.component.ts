@@ -10,7 +10,6 @@ import { AuthService } from '../services/auth.service';
 import { tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from '../stores/app-state';
-import { login } from '../stores/login/login.actions';
 import { LoginActions } from '../stores/login/action-types';
 
 @Component({

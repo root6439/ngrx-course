@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -14,6 +14,12 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Store } from '@ngrx/store';
+import { AppState } from './stores/app-state';
+import { CommonModule } from '@angular/common';
+import { isLoggedIn, isLoggedOut } from './stores/login/login-selectors';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { LoginActions } from './stores/login/action-types';
 
 @Component({
   selector: 'app-root',
@@ -26,27 +32,36 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSidenavModule,
     MatProgressSpinnerModule,
     MatListModule,
+    CommonModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
   readonly router = inject(Router);
+  private readonly store = inject(Store<AppState>);
 
-  loading = true;
+  isLoggedIn = toSignal(this.store.select(isLoggedIn));
+  isLoggedOut = toSignal(this.store.select(isLoggedOut));
+
+  loading = signal(false);
 
   ngOnInit() {
+    this.watchRouterChanges();
+  }
+
+  private watchRouterChanges() {
     this.router.events.subscribe((event) => {
       switch (true) {
         case event instanceof NavigationStart: {
-          this.loading = true;
+          this.loading.set(true);
           break;
         }
 
         case event instanceof NavigationEnd:
         case event instanceof NavigationCancel:
         case event instanceof NavigationError: {
-          this.loading = false;
+          this.loading.set(false);
           break;
         }
         default: {
@@ -56,5 +71,7 @@ export class AppComponent {
     });
   }
 
-  logout() {}
+  logout() {
+    this.store.dispatch(LoginActions.logout());
+  }
 }

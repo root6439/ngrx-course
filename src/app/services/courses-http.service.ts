@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -7,7 +7,7 @@ import { Lesson } from '../shared/models/lesson';
 
 @Injectable({ providedIn: 'root' })
 export class CoursesHttpService {
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   findAllCourses(): Observable<Course[]> {
     return this.http

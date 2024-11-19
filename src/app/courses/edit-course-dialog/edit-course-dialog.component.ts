@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Course } from '../../shared/models/course';
 import {
@@ -20,6 +20,10 @@ import { CoursesHttpService } from '../../services/courses-http.service';
   imports: [AngularMaterialModule, ReactiveFormsModule, CommonModule],
 })
 export class EditCourseDialogComponent {
+  private readonly fb = inject(FormBuilder);
+  private readonly dialogRef = inject(MatDialogRef<EditCourseDialogComponent>);
+  private readonly coursesService = inject(CoursesHttpService);
+
   form: FormGroup;
 
   dialogTitle: string;
@@ -30,12 +34,7 @@ export class EditCourseDialogComponent {
 
   loading$: Observable<boolean>;
 
-  constructor(
-    private fb: FormBuilder,
-    private dialogRef: MatDialogRef<EditCourseDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data: any,
-    private coursesService: CoursesHttpService
-  ) {
+  constructor(@Inject(MAT_DIALOG_DATA) data: any) {
     this.dialogTitle = data.dialogTitle;
     this.course = data.course;
     this.mode = data.mode;
