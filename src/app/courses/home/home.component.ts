@@ -11,11 +11,10 @@ import { CoursesCardListComponent } from '../courses-card-list/courses-card-list
 import { CoursesHttpService } from '../../services/courses-http.service';
 
 @Component({
-  selector: 'home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
-  standalone: true,
-  imports: [AngularMaterialModule, CommonModule, CoursesCardListComponent],
+    selector: 'home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css'],
+    imports: [AngularMaterialModule, CommonModule, CoursesCardListComponent]
 })
 export class HomeComponent implements OnInit {
   promoTotal$: Observable<number>;

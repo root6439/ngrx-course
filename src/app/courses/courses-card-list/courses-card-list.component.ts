@@ -14,11 +14,10 @@ import { AngularMaterialModule } from '../../shared/Material.module';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'courses-card-list',
-  templateUrl: './courses-card-list.component.html',
-  styleUrls: ['./courses-card-list.component.css'],
-  standalone: true,
-  imports: [AngularMaterialModule, RouterModule],
+    selector: 'courses-card-list',
+    templateUrl: './courses-card-list.component.html',
+    styleUrls: ['./courses-card-list.component.css'],
+    imports: [AngularMaterialModule, RouterModule]
 })
 export class CoursesCardListComponent implements OnInit {
   @Input()

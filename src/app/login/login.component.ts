@@ -13,12 +13,11 @@ import { AppState } from '../stores/app-state';
 import { LoginActions } from '../stores/login/action-types';
 
 @Component({
-  selector: 'login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  standalone: true,
-  imports: [AngularMaterialModule, ReactiveFormsModule],
-  providers: [AuthService],
+    selector: 'login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    imports: [AngularMaterialModule, ReactiveFormsModule],
+    providers: [AuthService]
 })
 export class LoginComponent {
   private readonly fb = inject(FormBuilder);

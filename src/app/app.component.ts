@@ -23,20 +23,19 @@ import { LoginActions } from './stores/login/action-types';
 import { login } from './stores/login/login.actions';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    MatIconModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatProgressSpinnerModule,
-    MatListModule,
-    CommonModule,
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+    selector: 'app-root',
+    imports: [
+        RouterOutlet,
+        RouterLink,
+        MatIconModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MatProgressSpinnerModule,
+        MatListModule,
+        CommonModule,
+    ],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
   readonly router = inject(Router);
