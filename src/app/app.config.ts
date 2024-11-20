@@ -16,6 +16,7 @@ import {
 import { loginReducer } from './stores/login/login-reducer';
 import { provideEffects } from '@ngrx/effects';
 import * as loginEffects from './stores/login/login-effects';
+import { provideRouterStore } from '@ngrx/router-store';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,5 +27,6 @@ export const appConfig: ApplicationConfig = {
     provideStore({ auth: loginReducer }),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideEffects(loginEffects),
-  ],
+    provideRouterStore()
+],
 };
