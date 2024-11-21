@@ -13,11 +13,11 @@ import { CommonModule } from '@angular/common';
 import { CoursesHttpService } from '../../services/courses-http.service';
 
 @Component({
-    selector: 'course-dialog',
-    templateUrl: './edit-course-dialog.component.html',
-    styleUrls: ['./edit-course-dialog.component.css'],
-    imports: [AngularMaterialModule, ReactiveFormsModule, CommonModule],
-    standalone: true
+  selector: 'course-dialog',
+  templateUrl: './edit-course-dialog.component.html',
+  styleUrls: ['./edit-course-dialog.component.css'],
+  imports: [AngularMaterialModule, ReactiveFormsModule, CommonModule],
+  standalone: true,
 })
 export class EditCourseDialogComponent {
   private readonly fb = inject(FormBuilder);

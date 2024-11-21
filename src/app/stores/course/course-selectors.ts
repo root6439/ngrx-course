@@ -1,12 +1,11 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { CourseState } from './course-state';
-import { compareCourses } from '../../shared/models/course';
+import { CourseState, coursesAdapter } from './course-state';
+
+export const { selectAll } = coursesAdapter.getSelectors();
 
 const selectCourseState = createFeatureSelector<CourseState>('courses');
 
-export const getCourses = createSelector(selectCourseState, (state) =>
-  [...state.courses]?.sort(compareCourses)
-);
+export const getCourses = createSelector(selectCourseState, selectAll);
 
 export const getBeginnerCourses = createSelector(getCourses, (courses) =>
   courses.filter((course) => course.category == 'BEGINNER')
@@ -22,6 +21,6 @@ export const isLoadingCourses = createSelector(
 );
 
 export const getPromoTotal = createSelector(
-  selectCourseState,
-  (state) => state.courses.filter((course) => course.promo).length
+  getCourses,
+  (courses) => courses.filter((course) => course.promo).length
 );
