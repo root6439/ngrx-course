@@ -1,62 +1,48 @@
-import { Component, OnInit } from '@angular/core';
-import { compareCourses, Course } from '../../shared/models/course';
-import { Observable } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { defaultDialogConfig } from '../../shared/default-dialog-config';
 import { EditCourseDialogComponent } from '../edit-course-dialog/edit-course-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { map, shareReplay, tap } from 'rxjs/operators';
 import { AngularMaterialModule } from '../../shared/Material.module';
 import { CommonModule } from '@angular/common';
 import { CoursesCardListComponent } from '../courses-card-list/courses-card-list.component';
-import { CoursesHttpService } from '../../services/courses-http.service';
+import { Store } from '@ngrx/store';
+import {
+  getAdvancedCourses,
+  getBeginnerCourses,
+  getPromoTotal,
+  isLoadingCourses,
+} from '../../stores/course/course-selectors';
+import { CoursesActions } from '../../stores/course/action-types';
 
 @Component({
-    selector: 'home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css'],
-    imports: [AngularMaterialModule, CommonModule, CoursesCardListComponent]
+  selector: 'home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css'],
+  imports: [AngularMaterialModule, CommonModule, CoursesCardListComponent],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
-  promoTotal$: Observable<number>;
+  private readonly dialog = inject(MatDialog);
+  private readonly store = inject(Store);
 
-  loading$: Observable<boolean>;
-
-  beginnerCourses$: Observable<Course[]>;
-
-  advancedCourses$: Observable<Course[]>;
-
-  constructor(
-    private dialog: MatDialog,
-    private coursesHttpService: CoursesHttpService
-  ) {}
+  promoTotal = toSignal(this.store.select(getPromoTotal));
+  loading = toSignal(this.store.select(isLoadingCourses));
+  beginnerCourses = toSignal(this.store.select(getBeginnerCourses));
+  advancedCourses = toSignal(this.store.select(getAdvancedCourses));
 
   ngOnInit() {
     this.reload();
   }
 
   reload() {
-    const courses$ = this.coursesHttpService.findAllCourses().pipe(
-      map((courses) => courses.sort(compareCourses)),
-      shareReplay()
-    );
-
-    this.loading$ = courses$.pipe(map((courses) => !!courses));
-
-    this.beginnerCourses$ = courses$.pipe(
-      map((courses) =>
-        courses.filter((course) => course.category == 'BEGINNER')
-      )
-    );
-
-    this.advancedCourses$ = courses$.pipe(
-      map((courses) =>
-        courses.filter((course) => course.category == 'ADVANCED')
-      )
-    );
-
-    this.promoTotal$ = courses$.pipe(
-      map((courses) => courses.filter((course) => course.promo).length)
-    );
+    this.store.dispatch(CoursesActions.loadCourses());
   }
 
   onAddCourse() {

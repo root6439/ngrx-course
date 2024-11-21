@@ -1,6 +1,5 @@
-import { User } from "../shared/models/user.model";
-import { AuthState } from "./login/login-reducer";
+import { AuthState } from './login/login-state';
 
 export interface AppState {
-    auth: AuthState
+  auth: AuthState;
 }

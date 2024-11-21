@@ -17,7 +17,8 @@ import { LoginActions } from '../stores/login/action-types';
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss'],
     imports: [AngularMaterialModule, ReactiveFormsModule],
-    providers: [AuthService]
+    providers: [AuthService],
+    standalone: true
 })
 export class LoginComponent {
   private readonly fb = inject(FormBuilder);

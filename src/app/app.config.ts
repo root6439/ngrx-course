@@ -16,7 +16,10 @@ import {
 import { loginReducer } from './stores/login/login-reducer';
 import { provideEffects } from '@ngrx/effects';
 import * as loginEffects from './stores/login/login-effects';
-import { provideRouterStore } from '@ngrx/router-store';
+import { provideRouterStore, routerReducer } from '@ngrx/router-store';
+import { metaReducers } from './stores/app-meta-reducers';
+import { courseEffect } from './stores/course/course-effect';
+import { courseReducer } from './stores/course/course-reducers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,9 +27,20 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptorsFromDi()),
-    provideStore({ auth: loginReducer }),
+    provideStore(
+      { auth: loginReducer, courses: courseReducer, routerReducer },
+      {
+        metaReducers: metaReducers,
+        runtimeChecks: {
+          strictStateImmutability: true,
+          strictActionImmutability: true,
+          strictActionSerializability: true,
+          strictStateSerializability: true,
+        },
+      }
+    ),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideEffects(loginEffects),
-    provideRouterStore()
-],
+    provideEffects(loginEffects, { courseEffect }),
+    provideRouterStore(),
+  ],
 };

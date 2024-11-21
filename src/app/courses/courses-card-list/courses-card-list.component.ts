@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './courses-card-list.component.html',
   styleUrls: ['./courses-card-list.component.css'],
   imports: [AngularMaterialModule, RouterModule],
+  standalone: true
 })
 export class CoursesCardListComponent {
   private readonly dialog = inject(MatDialog);

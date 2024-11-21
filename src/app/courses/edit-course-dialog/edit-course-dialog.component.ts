@@ -16,7 +16,8 @@ import { CoursesHttpService } from '../../services/courses-http.service';
     selector: 'course-dialog',
     templateUrl: './edit-course-dialog.component.html',
     styleUrls: ['./edit-course-dialog.component.css'],
-    imports: [AngularMaterialModule, ReactiveFormsModule, CommonModule]
+    imports: [AngularMaterialModule, ReactiveFormsModule, CommonModule],
+    standalone: true
 })
 export class EditCourseDialogComponent {
   private readonly fb = inject(FormBuilder);

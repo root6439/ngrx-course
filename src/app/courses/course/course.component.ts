@@ -9,10 +9,11 @@ import { CommonModule } from '@angular/common';
 import { CoursesHttpService } from '../../services/courses-http.service';
 
 @Component({
-    selector: 'course',
-    templateUrl: './course.component.html',
-    styleUrls: ['./course.component.css'],
-    imports: [AngularMaterialModule, CommonModule]
+  selector: 'course',
+  templateUrl: './course.component.html',
+  styleUrls: ['./course.component.css'],
+  imports: [AngularMaterialModule, CommonModule],
+  standalone: true,
 })
 export class CourseComponent implements OnInit {
   private readonly coursesService = inject(CoursesHttpService);

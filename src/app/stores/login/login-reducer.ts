@@ -1,10 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { User } from '../../shared/models/user.model';
 import { LoginActions } from './action-types';
-
-export interface AuthState {
-  user: User;
-}
+import { AuthState } from './login-state';
 
 export const initialAuthState: AuthState = {
   user: undefined,
