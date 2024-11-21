@@ -16,9 +16,7 @@ import {
   getAdvancedCourses,
   getBeginnerCourses,
   getPromoTotal,
-  isLoadingCourses,
 } from '../../stores/course/course-selectors';
-import { CoursesActions } from '../../stores/course/action-types';
 
 @Component({
   selector: 'home',
@@ -33,7 +31,6 @@ export class HomeComponent implements OnInit {
   private readonly store = inject(Store);
 
   promoTotal = toSignal(this.store.select(getPromoTotal));
-  loading = toSignal(this.store.select(isLoadingCourses));
   beginnerCourses = toSignal(this.store.select(getBeginnerCourses));
   advancedCourses = toSignal(this.store.select(getAdvancedCourses));
 
@@ -42,7 +39,7 @@ export class HomeComponent implements OnInit {
   }
 
   reload() {
-    this.store.dispatch(CoursesActions.loadCourses());
+    // this.store.dispatch(CoursesActions.loadCourses());
   }
 
   onAddCourse() {

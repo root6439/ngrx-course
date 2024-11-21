@@ -30,7 +30,7 @@ export const appConfig: ApplicationConfig = {
     provideStore(
       { auth: loginReducer, courses: courseReducer, routerReducer },
       {
-        metaReducers: metaReducers,
+        
         runtimeChecks: {
           strictStateImmutability: true,
           strictActionImmutability: true,

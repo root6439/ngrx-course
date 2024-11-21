@@ -11,12 +11,6 @@
     <p>In Promo: {{ promoTotal() }}</p>
   </div>
 
-  @if (loading()) {
-  <div class="spinner-container">
-    <mat-spinner />
-  </div>
-  }
-
   <mat-tab-group>
     <mat-tab label="Beginners">
       <courses-card-list (courseChanged)="reload()" [courses]="beginnerCourses()" />

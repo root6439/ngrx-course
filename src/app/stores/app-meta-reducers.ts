@@ -9,4 +9,4 @@ export function logger(reducer: ActionReducer<any>): ActionReducer<any> {
   };
 }
 
-export const metaReducers: MetaReducer<any>[] = [logger] 
+export const metaReducers: MetaReducer<any>[] = [logger];

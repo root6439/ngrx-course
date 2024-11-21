@@ -1,9 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
-import { coursesAdapter, CourseState } from './course-state';
+import { coursesAdapter } from './course-state';
 import { CoursesActions } from './action-types';
 
 export const initialCourseState = coursesAdapter.getInitialState({
   loading: false,
+  error: null,
+  allCoursesLoaded: false,
 });
 
 export const courseReducer = createReducer(
@@ -13,6 +15,10 @@ export const courseReducer = createReducer(
     loading: true,
   })),
   on(CoursesActions.coursesLoaded, (state, action) =>
-    coursesAdapter.addMany(action.courses, { ...state, loading: false })
+    coursesAdapter.addMany(action.courses, {
+      ...state,
+      loading: false,
+      allCoursesLoaded: true,
+    })
   )
 );
