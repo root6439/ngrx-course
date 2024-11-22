@@ -1,5 +1,6 @@
 import { EntityMetadataMap, EntityDataModuleConfig } from '@ngrx/data';
 import { compareCourses } from './shared/models/course';
+import { compareLessons } from './shared/models/lesson';
 
 const entityMetadata: EntityMetadataMap = {
   Course: {
@@ -7,6 +8,9 @@ const entityMetadata: EntityMetadataMap = {
     entityDispatcherOptions: {
       optimisticUpdate: true,
     },
+  },
+  Lesson: {
+    sortComparer: compareLessons,
   },
 };
 

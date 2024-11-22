@@ -32,6 +32,7 @@ import { entityConfig } from './entity-metadata';
 import { CourseEntityService } from './services/course-entity.service';
 import { CoursesHttpService } from './services/courses-http.service';
 import { CourseDataService } from './services/course-data.service';
+import { LessonEntityService } from './services/lesson-entity.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -62,6 +63,7 @@ export const appConfig: ApplicationConfig = {
     },
     CoursesHttpService,
     CourseEntityService,
+    LessonEntityService,
     CourseDataService,
   ],
 };
