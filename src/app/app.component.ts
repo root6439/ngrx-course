@@ -21,22 +21,24 @@ import { isLoggedIn, isLoggedOut } from './stores/login/login-selectors';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { LoginActions } from './stores/login/action-types';
 import { login } from './stores/login/login.actions';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-    selector: 'app-root',
-    imports: [
-        RouterOutlet,
-        RouterLink,
-        MatIconModule,
-        MatToolbarModule,
-        MatSidenavModule,
-        MatProgressSpinnerModule,
-        MatListModule,
-        CommonModule,
-    ],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss',
-    standalone: true
+  selector: 'app-root',
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    MatIconModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatProgressSpinnerModule,
+    MatListModule,
+    CommonModule,
+    MatButtonModule,
+  ],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
+  standalone: true,
 })
 export class AppComponent {
   readonly router = inject(Router);

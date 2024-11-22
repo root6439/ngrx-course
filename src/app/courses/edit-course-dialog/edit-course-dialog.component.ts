@@ -67,12 +67,15 @@ export class EditCourseDialogComponent {
       ...this.form.value,
     };
 
-    const updated: Update<Course> = {
-      id: this.course().id,
-      changes: course,
-    };
-
-    this.store.dispatch(CoursesActions.updateCourse({ updated }));
+    if (this.mode() == 'create') {
+      this.store.dispatch(CoursesActions.createCourse({ course }));
+    } else {
+      this.store.dispatch(
+        CoursesActions.updateCourse({
+          updated: { id: this.course().id, changes: course },
+        })
+      );
+    }
 
     this.dialogRef.close();
 

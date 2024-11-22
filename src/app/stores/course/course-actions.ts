@@ -13,3 +13,8 @@ export const updateCourse = createAction(
   '[Edit Course Dialog] Course Updated',
   props<{ updated: Update<Course> }>()
 );
+
+export const createCourse = createAction(
+  '[Create Course Dialog] Course Created',
+  props<{ course: Course }>()
+);

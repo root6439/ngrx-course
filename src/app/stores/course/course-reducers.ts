@@ -23,5 +23,8 @@ export const courseReducer = createReducer(
   ),
   on(CoursesActions.updateCourse, (state, action) =>
     coursesAdapter.updateOne(action.updated, state)
+  ),
+  on(CoursesActions.createCourse, (state, action) =>
+    coursesAdapter.addOne(action.course, state)
   )
 );

@@ -20,6 +20,10 @@ import * as coursesEffects from './stores/course/course-effect';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { metaReducers } from './stores/app-meta-reducers';
 import { courseReducer } from './stores/course/course-reducers';
+import { provideEntityData, withEffects } from '@ngrx/data';
+import { entityConfig } from './entity-metadata';
+import { CourseEntityService } from './services/course-entity.service';
+import { CoursesHttpService } from './services/courses-http.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,5 +45,8 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideEffects(loginEffects, coursesEffects),
     provideRouterStore(),
+    provideEntityData(entityConfig, withEffects()),
+    CoursesHttpService,
+    CourseEntityService,
   ],
 };
