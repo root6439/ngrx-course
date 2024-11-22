@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Course } from '../../shared/models/course';
 import { Observable } from 'rxjs';
@@ -14,6 +19,7 @@ import { CoursesHttpService } from '../../services/courses-http.service';
   styleUrls: ['./course.component.css'],
   imports: [AngularMaterialModule, CommonModule],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseComponent implements OnInit {
   private readonly coursesService = inject(CoursesHttpService);

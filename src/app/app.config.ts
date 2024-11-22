@@ -3,6 +3,7 @@ import {
   provideZoneChangeDetection,
   isDevMode,
   APP_INITIALIZER,
+  provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -34,7 +35,7 @@ import { CourseDataService } from './services/course-data.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideExperimentalZonelessChangeDetection(),
     provideRouter(routes),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptorsFromDi()),

@@ -1,4 +1,10 @@
-import { Component, inject, Inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Inject,
+  signal,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Course } from '../../shared/models/course';
 import {
@@ -13,6 +19,7 @@ import { Store } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import { CoursesActions } from '../../stores/course/action-types';
 import { CourseEntityService } from '../../services/course-entity.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'course-dialog',
@@ -20,6 +27,7 @@ import { CourseEntityService } from '../../services/course-entity.service';
   styleUrls: ['./edit-course-dialog.component.css'],
   imports: [AngularMaterialModule, ReactiveFormsModule, CommonModule],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditCourseDialogComponent {
   private readonly fb = inject(FormBuilder);
@@ -68,6 +76,10 @@ export class EditCourseDialogComponent {
     };
 
     if (this.mode() == 'create') {
+      this.courseService
+        .add(course)
+        .pipe(tap(() => this.dialogRef.close()))
+        .subscribe();
       // this.store.dispatch(CoursesActions.createCourse({ course }));
     } else {
       this.courseService.update(course);
