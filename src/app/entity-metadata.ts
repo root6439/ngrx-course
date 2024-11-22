@@ -4,6 +4,9 @@ import { compareCourses } from './shared/models/course';
 const entityMetadata: EntityMetadataMap = {
   Course: {
     sortComparer: compareCourses,
+    entityDispatcherOptions: {
+      optimisticUpdate: true,
+    },
   },
 };
 

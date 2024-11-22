@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import { CoursesActions } from '../../stores/course/action-types';
+import { CourseEntityService } from '../../services/course-entity.service';
 
 @Component({
   selector: 'course-dialog',
@@ -23,14 +24,13 @@ import { CoursesActions } from '../../stores/course/action-types';
 export class EditCourseDialogComponent {
   private readonly fb = inject(FormBuilder);
   private readonly dialogRef = inject(MatDialogRef<EditCourseDialogComponent>);
-  private readonly store = inject(Store);
+  // private readonly store = inject(Store);
+  private readonly courseService = inject(CourseEntityService);
 
   form: FormGroup;
 
   dialogTitle = signal<string>('');
-
   course = signal<Course>(null);
-
   mode = signal<'create' | 'update'>('create');
 
   constructor(@Inject(MAT_DIALOG_DATA) data: any) {
@@ -68,19 +68,10 @@ export class EditCourseDialogComponent {
     };
 
     if (this.mode() == 'create') {
-      this.store.dispatch(CoursesActions.createCourse({ course }));
+      // this.store.dispatch(CoursesActions.createCourse({ course }));
     } else {
-      this.store.dispatch(
-        CoursesActions.updateCourse({
-          updated: { id: this.course().id, changes: course },
-        })
-      );
+      this.courseService.update(course);
+      this.dialogRef.close();
     }
-
-    this.dialogRef.close();
-
-    // this.coursesService
-    //   .saveCourse(course.id, course)
-    //   .subscribe(() => this.dialogRef.close());
   }
 }
