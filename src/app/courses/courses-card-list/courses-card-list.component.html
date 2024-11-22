@@ -1,10 +1,7 @@
 @for (course of courses(); track course.id) {
-<mat-card class="course-card mat-elevation-z10">
-
+<mat-card class="course-card mat-elevation-z10" color="primary">
   <mat-card-header>
-
     <mat-card-title>{{course.description}}</mat-card-title>
-
   </mat-card-header>
 
   <img mat-card-image [src]="course.iconUrl">
@@ -14,7 +11,6 @@
   </mat-card-content>
 
   <mat-card-actions class="course-actions">
-
     <button mat-raised-button color="primary" [routerLink]="['/courses', course.url]">
       VIEW
     </button>
@@ -26,8 +22,6 @@
     <button mat-mini-fab color="warn" (click)="onDeleteCourse(course)">
       <mat-icon class="add-course-btn">delete</mat-icon>
     </button>
-
   </mat-card-actions>
-
 </mat-card>
 }

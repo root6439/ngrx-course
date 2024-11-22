@@ -15,6 +15,7 @@ import { Store } from '@ngrx/store';
 import {
   getAdvancedCourses,
   getBeginnerCourses,
+  getIntermediateCourses,
   getPromoTotal,
 } from '../../stores/course/course-selectors';
 
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit {
 
   promoTotal = toSignal(this.store.select(getPromoTotal));
   beginnerCourses = toSignal(this.store.select(getBeginnerCourses));
+  intermediateCourses = toSignal(this.store.select(getIntermediateCourses));
   advancedCourses = toSignal(this.store.select(getAdvancedCourses));
 
   ngOnInit() {

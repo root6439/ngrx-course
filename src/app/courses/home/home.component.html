@@ -16,6 +16,10 @@
       <courses-card-list (courseChanged)="reload()" [courses]="beginnerCourses()" />
     </mat-tab>
 
+    <mat-tab label="Intermediate">
+      <courses-card-list (courseChanged)="reload()" [courses]="intermediateCourses()" />
+    </mat-tab>
+
     <mat-tab label="Advanced">
       <courses-card-list (courseChanged)="reload()" [courses]="advancedCourses()" />
     </mat-tab>

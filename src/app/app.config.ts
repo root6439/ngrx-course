@@ -16,9 +16,9 @@ import {
 import { loginReducer } from './stores/login/login-reducer';
 import { provideEffects } from '@ngrx/effects';
 import * as loginEffects from './stores/login/login-effects';
+import * as coursesEffects from './stores/course/course-effect';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { metaReducers } from './stores/app-meta-reducers';
-import { courseEffect } from './stores/course/course-effect';
 import { courseReducer } from './stores/course/course-reducers';
 
 export const appConfig: ApplicationConfig = {
@@ -30,7 +30,6 @@ export const appConfig: ApplicationConfig = {
     provideStore(
       { auth: loginReducer, courses: courseReducer, routerReducer },
       {
-        
         runtimeChecks: {
           strictStateImmutability: true,
           strictActionImmutability: true,
@@ -40,7 +39,7 @@ export const appConfig: ApplicationConfig = {
       }
     ),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideEffects(loginEffects, { courseEffect }),
+    provideEffects(loginEffects, coursesEffects),
     provideRouterStore(),
   ],
 };

@@ -11,6 +11,10 @@ export const getBeginnerCourses = createSelector(getCourses, (courses) =>
   courses.filter((course) => course.category == 'BEGINNER')
 );
 
+export const getIntermediateCourses = createSelector(getCourses, (courses) =>
+  courses.filter((course) => course.category == 'INTERMEDIATE')
+);
+
 export const getAdvancedCourses = createSelector(getCourses, (courses) =>
   courses.filter((course) => course.category == 'ADVANCED')
 );

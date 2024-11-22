@@ -1,4 +1,4 @@
-import { Component, inject, Inject } from '@angular/core';
+import { Component, inject, Inject, signal } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Course } from '../../shared/models/course';
 import {
@@ -7,10 +7,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { AngularMaterialModule } from '../../shared/Material.module';
 import { CommonModule } from '@angular/common';
-import { CoursesHttpService } from '../../services/courses-http.service';
+import { Store } from '@ngrx/store';
+import { Update } from '@ngrx/entity';
+import { CoursesActions } from '../../stores/course/action-types';
 
 @Component({
   selector: 'course-dialog',
@@ -22,22 +23,20 @@ import { CoursesHttpService } from '../../services/courses-http.service';
 export class EditCourseDialogComponent {
   private readonly fb = inject(FormBuilder);
   private readonly dialogRef = inject(MatDialogRef<EditCourseDialogComponent>);
-  private readonly coursesService = inject(CoursesHttpService);
+  private readonly store = inject(Store);
 
   form: FormGroup;
 
-  dialogTitle: string;
+  dialogTitle = signal<string>('');
 
-  course: Course;
+  course = signal<Course>(null);
 
-  mode: 'create' | 'update';
-
-  loading$: Observable<boolean>;
+  mode = signal<'create' | 'update'>('create');
 
   constructor(@Inject(MAT_DIALOG_DATA) data: any) {
-    this.dialogTitle = data.dialogTitle;
-    this.course = data.course;
-    this.mode = data.mode;
+    this.dialogTitle.set(data.dialogTitle);
+    this.course.set(data.course);
+    this.mode.set(data.mode);
 
     const formControls = {
       description: ['', Validators.required],
@@ -46,10 +45,10 @@ export class EditCourseDialogComponent {
       promo: ['', []] as any,
     };
 
-    if (this.mode == 'update') {
+    if (this.mode() == 'update') {
       this.form = this.fb.group(formControls);
       this.form.patchValue({ ...data.course });
-    } else if (this.mode == 'create') {
+    } else if (this.mode() == 'create') {
       this.form = this.fb.group({
         ...formControls,
         url: ['', Validators.required],
@@ -64,12 +63,21 @@ export class EditCourseDialogComponent {
 
   onSave() {
     const course: Course = {
-      ...this.course,
+      ...this.course(),
       ...this.form.value,
     };
 
-    this.coursesService
-      .saveCourse(course.id, course)
-      .subscribe(() => this.dialogRef.close());
+    const updated: Update<Course> = {
+      id: this.course().id,
+      changes: course,
+    };
+
+    this.store.dispatch(CoursesActions.updateCourse({ updated }));
+
+    this.dialogRef.close();
+
+    // this.coursesService
+    //   .saveCourse(course.id, course)
+    //   .subscribe(() => this.dialogRef.close());
   }
 }
