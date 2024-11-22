@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
 import { CourseComponent } from '../courses/course/course.component';
 import { HomeComponent } from '../courses/home/home.component';
-import { courseResolver } from '../resolvers/course.resolver';
+import { newCourseResolver } from '../resolvers/new-course.resolver';
 
 export const coursesRoutes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    resolve: { courses: courseResolver },
+    resolve: { courses: newCourseResolver },
   },
   {
     path: ':courseUrl',

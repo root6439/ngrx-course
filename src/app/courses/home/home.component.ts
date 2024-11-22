@@ -18,6 +18,8 @@ import {
   getIntermediateCourses,
   getPromoTotal,
 } from '../../stores/course/course-selectors';
+import { CourseEntityService } from '../../services/course-entity.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'home',
@@ -29,12 +31,37 @@ import {
 })
 export class HomeComponent implements OnInit {
   private readonly dialog = inject(MatDialog);
-  private readonly store = inject(Store);
+  private readonly courseService = inject(CourseEntityService);
 
-  promoTotal = toSignal(this.store.select(getPromoTotal));
-  beginnerCourses = toSignal(this.store.select(getBeginnerCourses));
-  intermediateCourses = toSignal(this.store.select(getIntermediateCourses));
-  advancedCourses = toSignal(this.store.select(getAdvancedCourses));
+  promoTotal = toSignal(
+    this.courseService.entities$.pipe(
+      map((courses) => courses.filter((course) => course.promo).length)
+    )
+  );
+
+  beginnerCourses = toSignal(
+    this.courseService.entities$.pipe(
+      map((courses) =>
+        courses.filter((course) => course.category == 'BEGINNER')
+      )
+    )
+  );
+
+  intermediateCourses = toSignal(
+    this.courseService.entities$.pipe(
+      map((courses) =>
+        courses.filter((course) => course.category == 'INTERMEDIATE')
+      )
+    )
+  );
+
+  advancedCourses = toSignal(
+    this.courseService.entities$.pipe(
+      map((courses) =>
+        courses.filter((course) => course.category == 'ADVANCED')
+      )
+    )
+  );
 
   ngOnInit() {
     this.reload();

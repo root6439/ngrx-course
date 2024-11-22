@@ -2,6 +2,7 @@ import {
   ApplicationConfig,
   provideZoneChangeDetection,
   isDevMode,
+  APP_INITIALIZER,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
@@ -20,10 +21,16 @@ import * as coursesEffects from './stores/course/course-effect';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { metaReducers } from './stores/app-meta-reducers';
 import { courseReducer } from './stores/course/course-reducers';
-import { provideEntityData, withEffects } from '@ngrx/data';
+import {
+  DefaultDataService,
+  EntityDataService,
+  provideEntityData,
+  withEffects,
+} from '@ngrx/data';
 import { entityConfig } from './entity-metadata';
 import { CourseEntityService } from './services/course-entity.service';
 import { CoursesHttpService } from './services/courses-http.service';
+import { CourseDataService } from './services/course-data.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,7 +39,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(withInterceptorsFromDi()),
     provideStore(
-      { auth: loginReducer, courses: courseReducer, routerReducer },
+      { auth: loginReducer, routerReducer },
       {
         runtimeChecks: {
           strictStateImmutability: true,
@@ -46,7 +53,23 @@ export const appConfig: ApplicationConfig = {
     provideEffects(loginEffects, coursesEffects),
     provideRouterStore(),
     provideEntityData(entityConfig, withEffects()),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApplication,
+      multi: true,
+      deps: [EntityDataService, CourseDataService],
+    },
     CoursesHttpService,
     CourseEntityService,
+    CourseDataService,
   ],
 };
+
+export function initializeApplication(
+  entityDataService: EntityDataService,
+  courseDataService: CourseDataService
+) {
+  return (): void => {
+    entityDataService.registerService('Course', courseDataService);
+  };
+}
