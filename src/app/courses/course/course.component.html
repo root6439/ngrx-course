@@ -1,13 +1,17 @@
-<div class="course" *ngIf="(course$ | async) as course">
-  <h2>{{course?.description}}</h2>
+@let c = course();
 
-  <img class="course-thumbnail mat-elevation-z8" [src]="course?.iconUrl">
+<div class="course">
+  <h2>{{c?.description}}</h2>
 
-  <div class="spinner-container" *ngIf="(loading$ | async )">
+  <img class="course-thumbnail mat-elevation-z8" [src]="c?.iconUrl">
+
+  @if(loading()) {
+  <div class="spinner-container">
     <mat-spinner />
   </div>
+  }
 
-  <mat-table class="lessons-table mat-elevation-z8" [dataSource]="lessons$ | async">
+  <mat-table class="lessons-table mat-elevation-z8" [dataSource]="lessons()">
     <ng-container matColumnDef="seqNo">
       <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
 
@@ -30,5 +34,5 @@
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
   </mat-table>
 
-  <button class="bottom-toolbar" mat-raised-button color="accent" (click)="loadLessonsPage(course)">Load More</button>
+  <button class="bottom-toolbar" mat-raised-button color="accent" (click)="loadLessonsPage(course())">Load More</button>
 </div>
